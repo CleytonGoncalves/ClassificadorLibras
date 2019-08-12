@@ -1,0 +1,42 @@
+## Conjuntos
+
+100 imagens de treinamento no formato 50x50 P&B, e 20 images de teste no mesmo formato.
+
+
+## Sinais Incluidos
+
+Conjunto de 40 sinais da Libras:
+’A’, ’B’, ’C’, ’D’, ’E’, ’F’, ’G’, ’I’, ’L’, ’M’, ’N’, ’O’, ’P’, ’Q’, ’R’, ’S’, ’T’, ’U’, ’V’, ’W’, ’X’, ’Y’.
+’1’, ’2’, ’4’, ’5’, ’7’, e ’9’,
+’Adulto, ’América’, ’Avião’, ’Casa’, ’Gasolina’, ’Identidade’, ’Juntos’, ’Lei’, ’Palavra’, ’Pedra’,
+’Pequeno’ e ’Verbo’.
+
+
+## Sinais Removidos
+
+Sinais em que o parâmetro de configuração da mão fosse suficiente para a identificação do significado.
+
+Sinais que apresentam o parâmetro de movimento, como ’H’, ’J’ e ’Z’, não foram incluídos.
+
+Além disso, os números ’3’ e ’8’ também não foram incluídos, devido ao fato de que a postura de
+mão para execução destes é similar a dos sinais ’W’ e ’S’, respectivamente.
+
+Já o sinal ’6’ não foi considerado para a formulação do dataset devido ao fato de que a sua postura de mão
+se assemelha ao ’9’, porém, com a mão rotacionada em relação a este.
+
+## Forma de Aquisição
+
+Utilização de uma webcam, foram capturadas 120 imagens (valor arbitrário) de resolução 50x50 pixels para cada sinal.
+Essas 120 imagens correspondem a subimagens que englobam somente a região das mãos de cada modelo,
+sendo que estas foram geradas a partir de recorte manual das imagens adquiridas com a câmera.
+Chegou-se ao fim deste processo a um total de 4800 imagens que foram convertidas de RGB para a escala de cinza.
+
+Foram utilizados 5 indivíduos diferentes, com variação de sexo e faixa etária.
+
+## Dataset auxiliar
+
+Um outro dataset auxiliar foi formado com 4800 imagens.
+
+Estas são máscaras binárias obtidas com a aplicação de uma abordagem para a detecção de pele nas imagens
+originais, antes de serem convertidas para escala de cinza.
+

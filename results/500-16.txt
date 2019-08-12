@@ -1,0 +1,2 @@
+Epoch 500/500
+ - 2s - loss: 0.0087 - acc: 0.9983 - val_loss: 0.9118 - val_acc: 0.8988

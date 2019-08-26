@@ -1,3 +1,0 @@
-Epoch 10000/10000
- - 1s - loss: 0.0117 - acc: 0.9960 - val_loss: 1.6655 - val_acc: 0.8825
-## Treinamento finalizado em 15142s ##

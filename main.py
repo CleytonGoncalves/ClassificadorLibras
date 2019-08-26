@@ -1,9 +1,9 @@
 import time
 
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
-from keras import backend as k
+from keras import backend as k, callbacks
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.layers import Conv2D, MaxPooling2D
 from keras.models import Sequential
@@ -18,15 +18,15 @@ DATA_FOLDER = 'data'
 TRAIN_DATA_DIR, TEST_DATA_DIR = f'{DATA_FOLDER}/training/', f'{DATA_FOLDER}/testing/'
 IMG_WIDTH, IMG_HEIGHT = 50, 50
 
-NUM_EPOCHS = 40
-BATCH_SZ = 16
+NUM_EPOCHS = 30
+BATCH_SZ = 8
 
-MODEL_SAVE_PATH = 'models/model.h5'
+MODEL_SAVE_PATH = f'models/{BATCH_SZ}-{{epoch:02d}} {{val_acc:.2f}}-{{val_loss:.2f}}.hdf5'
 
 print(f'Using GPU: {k.tensorflow_backend._get_available_gpus()}')
 np.random.seed(SEED_RANDOM)
 
-train_datagen = ImageDataGenerator(rescale=1./255., validation_split=0.25)
+train_datagen = ImageDataGenerator(rescale=1. / 255., validation_split=0.25)
 test_datagen = ImageDataGenerator(rescale=1. / 255)
 
 train_generator = train_datagen.flow_from_directory(
@@ -76,11 +76,19 @@ model.add(Activation('softmax'))
 model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy']
-)
+              )
 
 model.summary()
 
 print("\n##\n")
+
+save_callback = callbacks.ModelCheckpoint(MODEL_SAVE_PATH,
+                                          monitor='val_acc',
+                                          verbose=0,
+                                          save_best_only=True,
+                                          save_weights_only=False,
+                                          mode='auto',
+                                          period=1)
 
 # this is the augmentation configuration we will use for training
 history = model.fit_generator(
@@ -91,6 +99,7 @@ history = model.fit_generator(
     epochs=NUM_EPOCHS,
     verbose=2,
     max_queue_size=10000,
+    callbacks=[save_callback]
 )
 
 print(f"\n## Treinamento finalizado em {time.perf_counter() - start:.0f}s ##\n")
@@ -112,5 +121,3 @@ plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
-
-model.save_weights(MODEL_SAVE_PATH)
